@@ -6,23 +6,46 @@ public class JavaExercises {
     /** Returns an array [1, 2, 3, 4, 5, 6] */
     public static int[] makeDice() {
         // TODO: Fill in this function.
-        return null;
+        return new int[] {1, 2, 3, 4, 5, 6};
     }
 
-    /** Returns the order depending on the customer.
-     *  If the customer is Ergun, return ["beyti", "pizza", "hamburger", "tea"].
-     *  If the customer is Erik, return ["sushi", "pasta", "avocado", "coffee"].
-     *  In any other case, return an empty String[] of size 3. */
+    /**
+     * Returns the order depending on the customer.
+     * If the customer is Ergun, return ["beyti", "pizza", "hamburger", "tea"].
+     * If the customer is Erik, return ["sushi", "pasta", "avocado", "coffee"].
+     * In any other case, return an empty String[] of size 3.
+     */
     public static String[] takeOrder(String customer) {
         // TODO: Fill in this function.
-        return null;
+        String[] order;
+        if(customer.equals("Ergun")) {
+            order= new String[] {"beyti", "pizza", "hamburger", "tea"};
+        } else if(customer.equals("Erik")) {
+            order= new String[] {"sushi", "pasta", "avocado", "coffee"};
+        } else {
+            order = new String[3];
+        }
+        return order;
     }
 
     /** Returns the positive difference between the maximum element and minimum element of the given array.
      *  Assumes array is nonempty. */
     public static int findMinMax(int[] array) {
         // TODO: Fill in this function.
-        return 0;
+        int max=array[0];
+        int min=array[0];
+        int diff;
+
+        for(int i=1; i<array.length; i++) {
+            if(max<array[i]) {
+                max=array[i];
+            }
+            if(min>array[i]) {
+                min=array[i];
+            }
+        }
+        diff = max-min;
+        return diff;
     }
 
     /**
@@ -39,7 +62,16 @@ public class JavaExercises {
 
     private static List<Integer> hailstoneHelper(int x, List<Integer> list) {
         // TODO: Fill in this function.
-        return null;
+        list.add(x);
+        while(x!=1) {
+            if (x % 2 == 0) {
+                x = x / 2;
+            } else {
+                x = 3 * x + 1;
+            }
+            list.add(x);
+        }
+        return list;
     }
 
 }

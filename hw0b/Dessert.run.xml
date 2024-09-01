@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Dessert" type="Application" factoryName="Application" activateToolWindowBeforeRun="false" nameIsGenerated="true">
+    <option name="UNNAMED_CLASS_CONFIGURATION" value="true" />
+    <option name="MAIN_CLASS_NAME" value="Dessert" />
+    <module name="hw0b" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
