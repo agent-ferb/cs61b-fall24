@@ -122,42 +122,39 @@ public class Model {
      * 2. There are two adjacent tiles with the same value.
      */
     public boolean atLeastOneMoveExists() {
-        if(emptySpaceExists()){
+        if (emptySpaceExists()) {
             return true;
-        }
-        else{
+        } else {
             int totalSize = size();
-
             for (int i = 0; i < totalSize; i++) {
                 for (int j = 0; j < totalSize; j++) {
                     int currentV = tile(i, j).value();
-                    int number_of_adjacent_tiles=0;
                     int leftV;
                     int rightV;
                     int aboveV;
                     int belowV;
 
-                    if(j != 0) {
+                    if (j != 0) {
                         aboveV = tile(i, j - 1).value();
-                        if(aboveV == currentV) {
+                        if (aboveV == currentV) {
                             return true;
                         }
                     }
-                    if(i != 0) {
+                    if (i != 0) {
                         leftV = tile(i - 1, j).value();
-                        if(leftV == currentV) {
+                        if (leftV == currentV) {
                             return true;
                         }
                     }
-                    if(j != totalSize - 1) {
+                    if (j != totalSize - 1) {
                         belowV = tile(i, j + 1).value();
-                        if(belowV == currentV) {
+                        if (belowV == currentV) {
                             return true;
                         }
                     }
-                    if(i != totalSize - 1) {
+                    if (i != totalSize - 1) {
                         rightV = tile(i + 1, j).value();
-                        if(rightV == currentV) {
+                        if (rightV == currentV) {
                             return true;
                         }
                     }
@@ -186,14 +183,14 @@ public class Model {
         int myValue = currTile.value();
         int targetY = y;
 
-        for (int i = y+1; i < board.size(); i++) {
-            if (board.tile(x, i) == null){
-                targetY=i;
+        for (int i = y + 1; i < board.size(); i++) {
+            if (board.tile(x, i) == null) {
+                targetY = i;
             } else {
                 break;
             }
         }
-        if(targetY != y) {
+        if (targetY != y) {
             board.move(x, targetY, currTile);
         }
         Tile newTile = board.tile(x, targetY);
