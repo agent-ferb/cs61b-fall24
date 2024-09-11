@@ -28,6 +28,20 @@ public class LinkedListDeque61BTest {
             to imagine a bug in your code that would lead to ["front"] and ["front", "middle"] failing,
             but not ["front", "middle", "back"].
           */
+
+         Deque61B<Integer> lld2 = new LinkedListDeque61B<>();
+         lld2.addLast(0);
+         lld2.addLast(1);
+         lld2.addFirst(-1);
+         lld2.addLast(2);
+         lld2.addFirst(-2);
+         lld2.removeFirst();
+         lld2.removeFirst();
+         lld2.removeFirst();
+         lld2.removeFirst();
+         lld2.removeFirst();
+         lld2.addFirst(2);
+         assertThat(lld2.toList()).containsExactly(2).inOrder();
      }
 
      @Test
@@ -40,6 +54,20 @@ public class LinkedListDeque61BTest {
          lld1.addLast("middle"); // after this call we expect: ["front", "middle"]
          lld1.addLast("back"); // after this call we expect: ["front", "middle", "back"]
          assertThat(lld1.toList()).containsExactly("front", "middle", "back").inOrder();
+
+         Deque61B<Integer> lld2 = new LinkedListDeque61B<>();
+         lld2.addLast(0);
+         lld2.addLast(1);
+         lld2.addFirst(-1);
+         lld2.addLast(2);
+         lld2.addFirst(-2);
+         lld2.removeFirst();
+         lld2.removeFirst();
+         lld2.removeFirst();
+         lld2.removeFirst();
+         lld2.removeFirst();
+         lld2.addLast(2);
+         assertThat(lld2.toList()).containsExactly(2).inOrder();
      }
 
      @Test
