@@ -9,9 +9,9 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     private int size;
 
     private class Node {
-        public T item;
-        public Node prev;
-        public Node next;
+        private T item;
+        private Node prev;
+        private Node next;
 
         public Node(T i, Node p, Node n) {
             item = i;
