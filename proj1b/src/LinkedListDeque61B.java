@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -120,9 +121,25 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         }
     }
 
-    public interface Iterator<T> {
-        boolean hasNext();
-        T next();
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListDequeIterator();
+    }
+
+    private class LinkedListDequeIterator implements Iterator<T> {
+        private Node current = sentinel.next;
+
+        @Override
+        public boolean hasNext() {
+            return current != sentinel;
+        }
+
+        @Override
+        public T next() {
+            T item = current.item;
+            current = current.next;
+            return item;
+        }
     }
 
     public boolean contains(T x) {

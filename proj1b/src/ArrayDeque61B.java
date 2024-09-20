@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.Math;
+import java.util.Iterator;
 
 public class ArrayDeque61B<T> implements Deque61B<T> {
     private int size;
@@ -108,9 +109,25 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         last = size;
     }
 
-    public interface Iterator<T> {
-        boolean hasNext();
-        T next();
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    private class ArrayDequeIterator implements Iterator<T> {
+        private int current = 0;
+
+        @Override
+        public boolean hasNext() {
+            return current < size;
+        }
+
+        @Override
+        public T next() {
+            T item = get(current);
+            current++;
+            return item;
+        }
     }
 
     public boolean contains(T x) {
