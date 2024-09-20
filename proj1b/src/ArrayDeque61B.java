@@ -107,4 +107,49 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         first = 0;
         last = size;
     }
+
+    public interface Iterator<T> {
+        boolean hasNext();
+        T next();
+    }
+
+    public boolean contains(T x) {
+        for (int i = 0; i < size; i += 1) {
+            if (items[i].equals(x)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (other instanceof ArrayDeque61B otherArray) {
+            if (this.size != otherArray.size) {
+                return false;
+            }
+            for (T x: this) {
+                if(!otherArray.contains(x)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        String returnString = "{";
+        for (T item : this) {
+            returnString += item.toString();
+            returnString += ", ";
+        }
+        returnString += "}";
+        return returnString;
+    }
 }

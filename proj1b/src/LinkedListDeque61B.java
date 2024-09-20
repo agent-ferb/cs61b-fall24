@@ -119,4 +119,50 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
             return getRecursiveHelper(currentNode.next, index - 1);
         }
     }
+
+    public interface Iterator<T> {
+        boolean hasNext();
+        T next();
+    }
+
+    public boolean contains(T x) {
+        for (int i = 0; i < size; i += 1) {
+            if (get(i).equals(x)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (other instanceof LinkedListDeque61B otherList) {
+            if (this.size != otherList.size) {
+                return false;
+            }
+            for (T x: this) {
+                if(!otherList.contains(x)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        String returnString = "{";
+        for (T item : this) {
+            returnString += item.toString();
+            returnString += ", ";
+        }
+        returnString += "}";
+        return returnString;
+    }
+
 }
