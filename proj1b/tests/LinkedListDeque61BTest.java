@@ -63,13 +63,13 @@ public class LinkedListDeque61BTest {
         ad1.addLast(1);
         ad1.addLast(2);
         ad1.addLast(3);
-        assertEquals("{1, 2, 3}", ad1.toString()); // Check correct format for non-empty deque
+        assertEquals("[1, 2, 3]", ad1.toString()); // Check correct format for non-empty deque
     }
 
     @Test
     public void testToString_empty() {
         Deque61B<Integer> ad1 = new ArrayDeque61B<>();
-        assertEquals("{}", ad1.toString()); // Empty deque should return {}
+        assertEquals("[]", ad1.toString()); // Empty deque should return {}
     }
 
     @Test

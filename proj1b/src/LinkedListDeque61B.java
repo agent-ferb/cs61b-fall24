@@ -184,7 +184,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public String toString() {
-        StringBuilder returnString = new StringBuilder("{");
+        StringBuilder returnString = new StringBuilder("[");
         int i = 0;
         for (T item : this) {
             returnString.append(item.toString());
@@ -193,7 +193,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
             }
             i++;
         }
-        returnString.append("}");
+        returnString.append("]");
         return returnString.toString();
     }
 
