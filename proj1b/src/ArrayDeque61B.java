@@ -42,7 +42,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         for (int i = 0; i < size; i++) {
             returnArray[i] = items[Math.floorMod(first + i, items.length)];  // Handle circular nature
         }
-        return Arrays.asList(returnArray);
+        return List.of(returnArray);
     }
 
     @Override
