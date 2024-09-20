@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.Math;
 import java.util.Iterator;
 
 public class ArrayDeque61B<T> implements Deque61B<T> {
@@ -15,8 +14,8 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         first = 0;
         last = 0;
         size = 0;
-
     }
+
     @Override
     public void addFirst(T x) {
         if (size == items.length) {
@@ -24,7 +23,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         }
         first = Math.floorMod(first - 1, items.length);
         items[first] = x;
-        size ++;
+        size += 1;
     }
 
     @Override
@@ -34,7 +33,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         }
         items[last] = x;
         last = Math.floorMod(last + 1, items.length);
-        size ++;
+        size += 1;
     }
 
     @Override
@@ -145,28 +144,42 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
             return true;
         }
 
-        if (other instanceof ArrayDeque61B otherArray) {
-            if (this.size != otherArray.size) {
+        // Check if the other object is an instance of Deque61B (common interface)
+        if (other instanceof Deque61B<?>) {
+            Deque61B<?> otherDeque = (Deque61B<?>) other;
+
+            // Check if sizes are the same
+            if (this.size() != otherDeque.size()) {
                 return false;
             }
-            for (T x: this) {
-                if(!otherArray.contains(x)) {
+
+            // Compare each element, assuming both deques store elements in the same order
+            for (int i = 0; i < this.size(); i++) {
+                T thisElement = this.get(i);
+                Object otherElement = otherDeque.get(i);
+                // null safety
+                if (thisElement == null ? otherElement != null : !thisElement.equals(otherElement)) {
                     return false;
                 }
             }
             return true;
         }
+
         return false;
     }
 
     @Override
     public String toString() {
-        String returnString = "{";
+        StringBuilder returnString = new StringBuilder("{");
+        int i = 0;
         for (T item : this) {
-            returnString += item.toString();
-            returnString += ", ";
+            returnString.append(item.toString());
+            if (i < size - 1) {
+                returnString.append(", ");  // Only add ", " if it's not the last element
+            }
+            i++;
         }
-        returnString += "}";
-        return returnString;
+        returnString.append("}");
+        return returnString.toString();
     }
 }

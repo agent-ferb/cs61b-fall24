@@ -22,195 +22,195 @@ public class ArrayDeque61BTest {
 
      @Test
      public void addFirstTestBasic() {
-         Deque61B<String> lld1 = new ArrayDeque61B<>();
-         lld1.addFirst("back"); // after this call we expect: ["back"]
-         assertThat(lld1.toList()).containsExactly("back").inOrder();
+         Deque61B<String> ad1 = new ArrayDeque61B<>();
+         ad1.addFirst("back"); // after this call we expect: ["back"]
+         assertThat(ad1.toList()).containsExactly("back").inOrder();
 
-         lld1.addFirst("middle"); // after this call we expect: ["middle", "back"]
-         assertThat(lld1.toList()).containsExactly("middle", "back").inOrder();
+         ad1.addFirst("middle"); // after this call we expect: ["middle", "back"]
+         assertThat(ad1.toList()).containsExactly("middle", "back").inOrder();
 
-         lld1.addFirst("front"); // after this call we expect: ["front", "middle", "back"]
-         assertThat(lld1.toList()).containsExactly("front", "middle", "back").inOrder();
+         ad1.addFirst("front"); // after this call we expect: ["front", "middle", "back"]
+         assertThat(ad1.toList()).containsExactly("front", "middle", "back").inOrder();
 
-         Deque61B<Integer> lld2 = new ArrayDeque61B<>();
-         lld2.addLast(0);
-         lld2.addLast(1);
-         lld2.addFirst(-1);
-         lld2.addLast(2);
-         lld2.addFirst(-2);
-         lld2.removeFirst();
-         lld2.removeFirst();
-         lld2.removeFirst();
-         lld2.removeFirst();
-         lld2.removeFirst();
-         lld2.addFirst(2);
-         assertThat(lld2.toList()).containsExactly(2).inOrder();
+         Deque61B<Integer> ad2 = new ArrayDeque61B<>();
+         ad2.addLast(0);
+         ad2.addLast(1);
+         ad2.addFirst(-1);
+         ad2.addLast(2);
+         ad2.addFirst(-2);
+         ad2.removeFirst();
+         ad2.removeFirst();
+         ad2.removeFirst();
+         ad2.removeFirst();
+         ad2.removeFirst();
+         ad2.addFirst(2);
+         assertThat(ad2.toList()).containsExactly(2).inOrder();
      }
 
     @Test
     /** In this test, we use only one assertThat statement. IMO this test is just as good as addFirstTestBasic.
      *  In other words, the tedious work of adding the extra assertThat statements isn't worth it. */
     public void addLastTestBasic() {
-        Deque61B<String> lld1 = new ArrayDeque61B<>();
+        Deque61B<String> ad1 = new ArrayDeque61B<>();
 
-        lld1.addLast("front"); // after this call we expect: ["front"]
-        lld1.addLast("middle"); // after this call we expect: ["front", "middle"]
-        lld1.addLast("back"); // after this call we expect: ["front", "middle", "back"]
-        assertThat(lld1.toList()).containsExactly("front", "middle", "back").inOrder();
+        ad1.addLast("front"); // after this call we expect: ["front"]
+        ad1.addLast("middle"); // after this call we expect: ["front", "middle"]
+        ad1.addLast("back"); // after this call we expect: ["front", "middle", "back"]
+        assertThat(ad1.toList()).containsExactly("front", "middle", "back").inOrder();
 
-        Deque61B<Integer> lld2 = new ArrayDeque61B<>();
-        lld2.addLast(0);
-        lld2.addLast(1);
-        lld2.addFirst(-1);
-        lld2.addLast(2);
-        lld2.addFirst(-2);
-        lld2.removeFirst();
-        lld2.removeFirst();
-        lld2.removeFirst();
-        lld2.removeFirst();
-        lld2.removeFirst();
-        lld2.addLast(2);
-        assertThat(lld2.toList()).containsExactly(2).inOrder();
+        Deque61B<Integer> ad2 = new ArrayDeque61B<>();
+        ad2.addLast(0);
+        ad2.addLast(1);
+        ad2.addFirst(-1);
+        ad2.addLast(2);
+        ad2.addFirst(-2);
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.addLast(2);
+        assertThat(ad2.toList()).containsExactly(2).inOrder();
     }
 
     @Test
     public void toListTest() {
-        Deque61B<String> lld1 = new ArrayDeque61B<>();
-        assertThat(lld1.toList()).containsExactly().inOrder();
+        Deque61B<String> ad1 = new ArrayDeque61B<>();
+        assertThat(ad1.toList()).containsExactly().inOrder();
 
     }
 
     @Test
     /** This test performs interspersed addFirst and addLast calls. */
     public void addFirstAndAddLastTest() {
-        Deque61B<Integer> lld1 = new ArrayDeque61B<>();
+        Deque61B<Integer> ad1 = new ArrayDeque61B<>();
 
-        lld1.addLast(0);   // [0]
-        lld1.addLast(1);   // [0, 1]
-        lld1.addFirst(-1); // [-1, 0, 1]
-        lld1.addLast(2);   // [-1, 0, 1, 2]
-        lld1.addFirst(-2); // [-2, -1, 0, 1, 2]
+        ad1.addLast(0);   // [0]
+        ad1.addLast(1);   // [0, 1]
+        ad1.addFirst(-1); // [-1, 0, 1]
+        ad1.addLast(2);   // [-1, 0, 1, 2]
+        ad1.addFirst(-2); // [-2, -1, 0, 1, 2]
 
-        assertThat(lld1.toList()).containsExactly(-2, -1, 0, 1, 2).inOrder();
+        assertThat(ad1.toList()).containsExactly(-2, -1, 0, 1, 2).inOrder();
     }
 
     @Test
     public void isEmptyTest() {
-        Deque61B<Integer> lld1 = new ArrayDeque61B<>();
-        assertThat(lld1.isEmpty()).isTrue();
+        Deque61B<Integer> ad1 = new ArrayDeque61B<>();
+        assertThat(ad1.isEmpty()).isTrue();
 
-        Deque61B<Integer> lld2 = new ArrayDeque61B<>();
-        lld2.addLast(3);   // [3]
-        lld2.addLast(1);   // [3, 1]
-        lld2.addFirst(-6); // [-6, 3, 1]
-        lld2.addLast(0);   // [-6, 3, 1, 0]
-        lld2.addFirst(-3); // [-3, -6, 3, 1, 0]
-        assertThat(lld2.isEmpty()).isFalse();
+        Deque61B<Integer> ad2 = new ArrayDeque61B<>();
+        ad2.addLast(3);   // [3]
+        ad2.addLast(1);   // [3, 1]
+        ad2.addFirst(-6); // [-6, 3, 1]
+        ad2.addLast(0);   // [-6, 3, 1, 0]
+        ad2.addFirst(-3); // [-3, -6, 3, 1, 0]
+        assertThat(ad2.isEmpty()).isFalse();
     }
 
     @Test
     public void sizeTest() {
-        Deque61B<Integer> lld1 = new ArrayDeque61B<>();
+        Deque61B<Integer> ad1 = new ArrayDeque61B<>();
 
-        lld1.addLast(3);   // [3]
-        lld1.addLast(1);   // [3, 1]
-        lld1.addFirst(-6); // [-6, 3, 1]
-        lld1.addLast(0);   // [-6, 3, 1, 0]
-        lld1.addFirst(-3); // [-3, -6, 3, 1, 0]
-        assertThat(lld1.size()).isEqualTo(5);
+        ad1.addLast(3);   // [3]
+        ad1.addLast(1);   // [3, 1]
+        ad1.addFirst(-6); // [-6, 3, 1]
+        ad1.addLast(0);   // [-6, 3, 1, 0]
+        ad1.addFirst(-3); // [-3, -6, 3, 1, 0]
+        assertThat(ad1.size()).isEqualTo(5);
 
-        Deque61B<Integer> lld2 = new ArrayDeque61B<>();
-        lld2.addLast(3);   // [3]
-        lld2.addLast(1);   // [3, 1]
-        lld2.addFirst(-6); // [-6, 3, 1]
-        lld2.addLast(0);   // [-6, 3, 1, 0]
-        lld2.addFirst(-3); // [-3, -6, 3, 1, 0]
-        lld2.removeFirst();
-        lld2.removeFirst();
-        lld2.removeFirst();
-        lld2.removeFirst();
-        lld2.removeFirst();
-        assertThat(lld2.size()).isEqualTo(0);
+        Deque61B<Integer> ad2 = new ArrayDeque61B<>();
+        ad2.addLast(3);   // [3]
+        ad2.addLast(1);   // [3, 1]
+        ad2.addFirst(-6); // [-6, 3, 1]
+        ad2.addLast(0);   // [-6, 3, 1, 0]
+        ad2.addFirst(-3); // [-3, -6, 3, 1, 0]
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        assertThat(ad2.size()).isEqualTo(0);
 
-        Deque61B<Integer> lld3 = new ArrayDeque61B<>();
-        lld2.removeFirst();
-        lld2.removeFirst();
-        assertThat(lld3.size()).isEqualTo(0);
+        Deque61B<Integer> ad3 = new ArrayDeque61B<>();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        assertThat(ad3.size()).isEqualTo(0);
 
     }
 
     @Test
     public void getTest() {
-        Deque61B<String> lld1 = new ArrayDeque61B<>();
+        Deque61B<String> ad1 = new ArrayDeque61B<>();
 
-        lld1.addLast("Korai");
-        lld1.addFirst("Tenma");
-        lld1.addLast("Tooru");
-        lld1.addFirst("Kenma");
-        lld1.addFirst("Kei");
-        lld1.addLast("Tobio"); // ["Kei", "Kenma", "Tenma", "Korai", "Tooru", "Tobio"]
+        ad1.addLast("Korai");
+        ad1.addFirst("Tenma");
+        ad1.addLast("Tooru");
+        ad1.addFirst("Kenma");
+        ad1.addFirst("Kei");
+        ad1.addLast("Tobio"); // ["Kei", "Kenma", "Tenma", "Korai", "Tooru", "Tobio"]
 
-        assertThat(lld1.get(-1)).isEqualTo(null);
-        assertThat(lld1.get(2)).isEqualTo("Tenma");
-        assertThat(lld1.get(10)).isEqualTo(null);
-        assertThat(lld1.get(3)).isEqualTo("Korai");
-        assertThat(lld1.get(0)).isEqualTo("Kei");
-        assertThat(lld1.get(4)).isEqualTo("Tooru");
+        assertThat(ad1.get(-1)).isEqualTo(null);
+        assertThat(ad1.get(2)).isEqualTo("Tenma");
+        assertThat(ad1.get(10)).isEqualTo(null);
+        assertThat(ad1.get(3)).isEqualTo("Korai");
+        assertThat(ad1.get(0)).isEqualTo("Kei");
+        assertThat(ad1.get(4)).isEqualTo("Tooru");
     }
 
     @Test
     public void removeFirstTest() {
-        Deque61B<String> lld1 = new ArrayDeque61B<>();
-        lld1.addLast("Korai");
-        lld1.addFirst("Tenma");
-        lld1.addLast("Tooru");
-        lld1.addFirst("Kenma");
-        lld1.addFirst("Kei");
-        lld1.addLast("Tobio");
-        lld1.removeFirst();
-        lld1.removeFirst();
-        assertThat(lld1.toList()).containsExactly("Tenma", "Korai", "Tooru", "Tobio").inOrder();
+        Deque61B<String> ad1 = new ArrayDeque61B<>();
+        ad1.addLast("Korai");
+        ad1.addFirst("Tenma");
+        ad1.addLast("Tooru");
+        ad1.addFirst("Kenma");
+        ad1.addFirst("Kei");
+        ad1.addLast("Tobio");
+        ad1.removeFirst();
+        ad1.removeFirst();
+        assertThat(ad1.toList()).containsExactly("Tenma", "Korai", "Tooru", "Tobio").inOrder();
 
-        Deque61B<Integer> lld2 = new ArrayDeque61B<>();
-        lld2.addLast(0);
-        lld2.addLast(1);
-        lld2.addFirst(-1);
-        lld2.addLast(2);
-        lld2.addFirst(-2);
-        lld2.removeFirst();
-        lld2.removeFirst();
-        lld2.removeFirst();
-        lld2.removeFirst();
-        lld2.removeFirst();
-        assertThat(lld2.toList()).containsExactly().inOrder();
+        Deque61B<Integer> ad2 = new ArrayDeque61B<>();
+        ad2.addLast(0);
+        ad2.addLast(1);
+        ad2.addFirst(-1);
+        ad2.addLast(2);
+        ad2.addFirst(-2);
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        assertThat(ad2.toList()).containsExactly().inOrder();
 
     }
 
     @Test
     public void removeLastTest() {
-        Deque61B<String> lld1 = new ArrayDeque61B<>();
-        lld1.addLast("Korai");
-        lld1.addFirst("Tenma");
-        lld1.addLast("Tooru");
-        lld1.addFirst("Kenma");
-        lld1.addFirst("Kei");
-        lld1.addLast("Tobio");
-        lld1.removeLast();
-        lld1.removeLast();
-        assertThat(lld1.toList()).containsExactly("Kei", "Kenma", "Tenma", "Korai").inOrder();
+        Deque61B<String> ad1 = new ArrayDeque61B<>();
+        ad1.addLast("Korai");
+        ad1.addFirst("Tenma");
+        ad1.addLast("Tooru");
+        ad1.addFirst("Kenma");
+        ad1.addFirst("Kei");
+        ad1.addLast("Tobio");
+        ad1.removeLast();
+        ad1.removeLast();
+        assertThat(ad1.toList()).containsExactly("Kei", "Kenma", "Tenma", "Korai").inOrder();
 
-        Deque61B<Integer> lld2 = new ArrayDeque61B<>();
-        lld2.addLast(0);
-        lld2.addLast(1);
-        lld2.addFirst(-1);
-        lld2.addLast(2);
-        lld2.addFirst(-2);
-        lld2.removeLast();
-        lld2.removeLast();
-        lld2.removeLast();
-        lld2.removeLast();
-        lld2.removeLast();
-        assertThat(lld2.toList()).containsExactly().inOrder();
+        Deque61B<Integer> ad2 = new ArrayDeque61B<>();
+        ad2.addLast(0);
+        ad2.addLast(1);
+        ad2.addFirst(-1);
+        ad2.addLast(2);
+        ad2.addFirst(-2);
+        ad2.removeLast();
+        ad2.removeLast();
+        ad2.removeLast();
+        ad2.removeLast();
+        ad2.removeLast();
+        assertThat(ad2.toList()).containsExactly().inOrder();
 
     }
 

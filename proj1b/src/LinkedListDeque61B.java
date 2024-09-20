@@ -157,29 +157,44 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
             return true;
         }
 
-        if (other instanceof LinkedListDeque61B otherList) {
-            if (this.size != otherList.size) {
+        // Check if the other object is an instance of Deque61B (common interface)
+        if (other instanceof Deque61B<?>) {
+            Deque61B<?> otherDeque = (Deque61B<?>) other;
+
+            // Check if sizes are the same
+            if (this.size() != otherDeque.size()) {
                 return false;
             }
-            for (T x: this) {
-                if(!otherList.contains(x)) {
+
+            // Compare each element, assuming both deques store elements in the same order
+            for (int i = 0; i < this.size(); i++) {
+                T thisElement = this.get(i);
+                Object otherElement = otherDeque.get(i);
+
+                // Handle null elements safely
+                if (thisElement == null ? otherElement != null : !thisElement.equals(otherElement)) {
                     return false;
                 }
             }
             return true;
         }
+
         return false;
     }
 
     @Override
     public String toString() {
-        String returnString = "{";
+        StringBuilder returnString = new StringBuilder("{");
+        int i = 0;
         for (T item : this) {
-            returnString += item.toString();
-            returnString += ", ";
+            returnString.append(item.toString());
+            if (i < size - 1) {
+                returnString.append(", ");  // Only add ", " if it's not the last element
+            }
+            i++;
         }
-        returnString += "}";
-        return returnString;
+        returnString.append("}");
+        return returnString.toString();
     }
 
 }
