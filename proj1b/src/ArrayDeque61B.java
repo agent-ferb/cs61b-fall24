@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Iterator;
 
@@ -38,11 +38,11 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public List<T> toList() {
-        List<T> returnList = new ArrayList<>();
+        T[] returnArray = (T[]) new Object[size];
         for (int i = 0; i < size; i++) {
-            returnList.add(items[Math.floorMod(first + i, items.length)]);  // Handle circular nature
+            returnArray[i] = items[Math.floorMod(first + i, items.length)];  // Handle circular nature
         }
-        return List.copyOf(returnList);
+        return Arrays.asList(returnArray);
     }
 
     @Override

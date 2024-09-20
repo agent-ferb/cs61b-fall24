@@ -7,6 +7,7 @@ import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
+import static org.junit.Assert.*;
 
 public class ArrayDeque61BTest {
 
@@ -212,6 +213,37 @@ public class ArrayDeque61BTest {
         ad2.removeLast();
         assertThat(ad2.toList()).containsExactly().inOrder();
 
+    }
+
+    @Test
+    public void resizeUpAndResizeDownTest() {
+        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+
+        // Trigger resize up by adding more than the initial capacity
+        int initialCapacity = 8;  // Assuming the initial capacity is 8
+        for (int i = 0; i < initialCapacity; i++) {
+            deque.addLast(i);
+        }
+
+        // At this point, the array should resize when adding one more element
+        deque.addLast(initialCapacity);  // Should trigger a resize up
+
+        assertEquals("Size after resizing up should be 9", 9, deque.size());
+        for (int i = 0; i < 9; i++) {
+            assertEquals("Elements should match after resizing up", Integer.valueOf(i), deque.get(i));
+        }
+
+        // Now trigger a resize down by removing enough elements
+        for (int i = 0; i < 7; i++) {
+            deque.removeFirst();
+        }
+
+        // At this point, after removing, the array should resize down
+        assertEquals("Size after resizing down should be 2", 2, deque.size());
+
+        // Ensure the remaining elements are still correct
+        assertEquals("Element 0 should remain after resize down", Integer.valueOf(7), deque.get(0));
+        assertEquals("Element 1 should remain after resize down", Integer.valueOf(8), deque.get(1));
     }
 
 }
