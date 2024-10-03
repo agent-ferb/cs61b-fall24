@@ -77,6 +77,7 @@ public class UnionFindTest {
         uf.union(1, 1);
         for (int i = 0; i < 4; i += 1) {
             assertThat(uf.find(i)).isEqualTo(i);
+            assertThat(uf.sizeOf(i)).isEqualTo(1);
         }
     }
 
@@ -85,6 +86,53 @@ public class UnionFindTest {
      * Specifically, you may want to write a test for path compression and to check for the correctness
      * of all methods in your implementation.
      */
+    @Test
+    public void parentTest() {
+        UnionFind uf = new UnionFind(10);
+
+        uf.union(4, 5);
+        uf.union(6, 7);
+
+        assertThat(uf.parent(7)).isEqualTo(-2);
+
+        uf.union(8, 9);
+        uf.union(4, 8);
+        uf.union(4, 6);
+
+        assertThat(uf.parent(7)).isEqualTo(9);
+        assertThat(uf.parent(5)).isEqualTo(9);
+    }
+
+    @Test
+    public void sizeTest() {
+        UnionFind uf = new UnionFind(10);
+
+        uf.union(4, 5);
+        uf.union(6, 7);
+
+        assertThat(uf.sizeOf(6)).isEqualTo(2);
+
+        uf.union(8, 9);
+        uf.union(4, 8);
+        uf.union(4, 6);
+
+        assertThat(uf.sizeOf(6)).isEqualTo(6);
+    }
+
+    @Test
+    public void testFindWithPathCompression() {
+        UnionFind uf = new UnionFind(6);
+        uf.union(2, 1);
+        uf.union(3, 2);
+        uf.union(4, 3);
+        uf.union(5, 4);  // deep tree
+
+        assertThat(uf.find(4)).isEqualTo(1);
+
+        int root = uf.find(5);
+        assertThat(root).isEqualTo(1);
+        assertThat(uf.parent(4)).isEqualTo(1);
+    }
 
 }
 
