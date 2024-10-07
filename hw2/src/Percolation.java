@@ -82,7 +82,9 @@ public class Percolation {
     }
 
     private void connectIfOpen(int row, int col, int neighborRow, int neighborCol) {
-        if (neighborRow >= 0 && neighborRow < size && neighborCol >= 0 && neighborCol < size && isOpen(neighborRow, neighborCol)) {
+        if (neighborRow >= 0 && neighborRow < size
+                && neighborCol >= 0 && neighborCol < size
+                && isOpen(neighborRow, neighborCol)) {
             int curr = to1d(row, col);
             int neighbor = to1d(neighborRow, neighborCol);
             uf.union(curr, neighbor);
