@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class PercolationTest {
@@ -81,8 +82,65 @@ public class PercolationTest {
     // TODO: Using the given tests above as a template,
     //       write some more tests and delete the fail() line
     @Test
-    public void yourFirstTestHere() {
-        fail("Did you write your own tests?");
+    public void firstTest() {
+        int N = 5;
+        Percolation p = new Percolation(N);
+        int[][] openSites = {
+                {0, 4},
+                {1, 0},
+                {2, 3},
+                {2, 2},
+                {3, 1},
+                {4, 1},
+                {1, 4},
+                {1, 3},
+                {2, 1}
+        };
+        for (int[] site : openSites) {
+            p.open(site[0], site[1]);
+        }
+        assertThat(p.percolates()).isTrue();
+        assertThat(p.numberOfOpenSites()).isEqualTo(9);
+        assertThat(p.isFull(1, 0)).isFalse();
+    }
+
+
+    @Test // stack overflow (https://stackoverflow.com/questions/156503/how-do-you-assert-that-a-certain-exception-is-thrown-in-junit-tests)
+    public void testNegativeSizeMessage() {
+        try {
+            new Percolation(-1);  // This should throw an IllegalArgumentException
+            fail("Expected IllegalArgumentException to be thrown");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Size must be positive.", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testOutOfBoundsMessage() {
+        Percolation p = new Percolation(5);
+        try {
+            p.open(-1, 0);  // Invalid row, should throw exception
+            fail("Expected IndexOutOfBoundsException to be thrown");
+        } catch (IndexOutOfBoundsException e) {
+            // Check if the exception message matches the expected message
+            assertEquals("Index out of bounds.", e.getMessage());
+        }
+
+        try {
+            p.isOpen(-1, 6);
+            fail("Expected IndexOutOfBoundsException to be thrown");
+        } catch (IndexOutOfBoundsException e) {
+            // Check if the exception message matches the expected message
+            assertEquals("Index out of bounds.", e.getMessage());
+        }
+
+        try {
+            p.isFull(0, -1);  // Invalid row, should throw exception
+            fail("Expected IndexOutOfBoundsException to be thrown");
+        } catch (IndexOutOfBoundsException e) {
+            // Check if the exception message matches the expected message
+            assertEquals("Index out of bounds.", e.getMessage());
+        }
     }
 
 }
