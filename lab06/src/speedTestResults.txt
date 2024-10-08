@@ -1,0 +1,49 @@
+length of string: 20
+# of strings: 5000
+ULLMap: 0.1; BSTMap: 0; Treemap: 0; HashMap: 0
+# of strings: 10000
+ULLMap: 0.32; BSTMap: 0; Treemap: 0; HashMap: 0
+# of strings: 20000
+ULLMap: 1.24; BSTMap: 0.01; Treemap: 0.01; HashMap: 0.01
+# of strings: 50000
+ULLMap: 7.63; BSTMap: 0.02; Treemap: 0.02; HashMap: 0.01
+# of strings: 100000
+ULLMap: Stack Overflow; BSTMap: 0.04; Treemap: 0.04; HashMap: 0.03
+
+length of string: 100
+# of strings: 5000
+ULLMap: 0.15; BSTMap: 0.01; Treemap: 0.01; HashMap: 0.01
+# of strings: 10000
+ULLMap: 0.51; BSTMap: 0.01; Treemap: 0.01; HashMap: 0.01
+# of strings: 20000
+ULLMap: 2.10; BSTMap: 0.02; Treemap: 0.02; HashMap: 0.02
+# of strings: 50000
+ULLMap: 22.75; BSTMap: 0.05; Treemap: 0.05; HashMap: 0.05
+# of strings: 100000
+ULLMap: Stack Overflow; BSTMap: 0.12; Treemap: 0.13; HashMap: 0.09
+
+length of string: 500
+# of strings: 5000
+ULLMap: 0.16; BSTMap: 0.02; Treemap: 0.02; HashMap: 0.02
+# of strings: 10000
+ULLMap: 0.57; BSTMap: 0.05; Treemap: 0.04; HashMap: 0.05
+# of strings: 20000
+ULLMap: 2.17; BSTMap: 0.09; Treemap: 0.09; HashMap: 0.09
+# of strings: 50000
+ULLMap: 34.50; BSTMap: 0.22; Treemap: 0.22; HashMap: 0.23
+# of strings: 100000
+ULLMap: Stack Overflow; BSTMap: 0.45; Treemap: 0.45; HashMap: 0.46
+
+Observations:
+1. As the number of strings increases, ULLMap experiences significant
+slowdown, especially when the number of strings exceeds 50,000.
+2. Both BSTMap and TreeMap show almost identical performance in all
+cases, suggesting that their underlying structures and operations
+(binary search trees) provide similar computational efficiencies.
+3. As string lengths increase from 20 to 500 characters, ULLMap is
+significantly affected. For instance, with 100,000 strings of length
+500, it suffers a stack overflow, whereas BSTMap, TreeMap, and
+HashMap handle the increase with moderate time increases.
+4. HashMap behaves strangely when length of string = 500. I think it
+should be the fastest one but it isn't.
+
