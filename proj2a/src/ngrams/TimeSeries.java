@@ -31,21 +31,17 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
-        // TODO: Fill in this constructor.
         for (Integer year: ts.keySet()) {
             if (year >= startYear && year <= endYear) {
                 this.put(year, ts.get(year));
             }
         }
-
-
     }
 
     /**
      *  Returns all years for this time series in ascending order.
      */
     public List<Integer> years() {
-        // TODO: Fill in this method.
         List<Integer> y = new LinkedList<>(this.keySet());
         return y;
     }
@@ -55,7 +51,6 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      *  order of years().
      */
     public List<Double> data() {
-        // TODO: Fill in this method.\
         List<Double> d = new LinkedList<>(this.values());
         return d;
     }
@@ -70,7 +65,6 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * should store the value from the TimeSeries that contains that year.
      */
     public TimeSeries plus(TimeSeries ts) {
-        // TODO: Fill in this method.
         TimeSeries nts = new TimeSeries();
         for (Integer year : ts.keySet()) {
             if (this.containsKey(year)) {

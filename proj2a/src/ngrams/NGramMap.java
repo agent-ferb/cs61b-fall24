@@ -20,7 +20,6 @@ import static ngrams.TimeSeries.MIN_YEAR;
  */
 public class NGramMap {
 
-    // TODO: Add any necessary static/instance variables.
     private TreeMap<String, TimeSeries> wordData;
     private TimeSeries totalCounts;
 
@@ -28,22 +27,20 @@ public class NGramMap {
      * Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME.
      */
     public NGramMap(String wordsFilename, String countsFilename) {
-        // TODO: Fill in this constructor. See the "NGramMap Tips" section of the spec for help.
         wordData = new TreeMap<>();
         totalCounts = new TimeSeries();
         readWordsFile(wordsFilename);
         readCountsFile(countsFilename);
     }
 
-        /**
-         * Provides the history of WORD between STARTYEAR and ENDYEAR, inclusive of both ends. The
-         * returned TimeSeries should be a copy, not a link to this NGramMap's TimeSeries. In other
-         * words, changes made to the object returned by this function should not also affect the
-         * NGramMap. This is also known as a "defensive copy". If the word is not in the data files,
-         * returns an empty TimeSeries.
-         */
+    /**
+     * Provides the history of WORD between STARTYEAR and ENDYEAR, inclusive of both ends. The
+     * returned TimeSeries should be a copy, not a link to this NGramMap's TimeSeries. In other
+     * words, changes made to the object returned by this function should not also affect the
+     * NGramMap. This is also known as a "defensive copy". If the word is not in the data files,
+     * returns an empty TimeSeries.
+     */
     public TimeSeries countHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
         if (!wordData.containsKey(word)) {
             return new TimeSeries();
         }
@@ -58,7 +55,6 @@ public class NGramMap {
      * is not in the data files, returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word) {
-        // TODO: Fill in this method.
         if (!wordData.containsKey(word)) {
             return new TimeSeries();
         }
@@ -70,7 +66,6 @@ public class NGramMap {
      * Returns a defensive copy of the total number of words recorded per year in all volumes.
      */
     public TimeSeries totalCountHistory() {
-        // TODO: Fill in this method.
         return new TimeSeries(totalCounts, TimeSeries.MIN_YEAR, TimeSeries.MAX_YEAR);
     }
 
@@ -80,7 +75,6 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
         if (!wordData.containsKey(word)) {
             return new TimeSeries();
         }
@@ -105,7 +99,6 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word) {
-        // TODO: Fill in this method.
         if (!wordData.containsKey(word)) {
             return new TimeSeries();
         }
@@ -130,7 +123,6 @@ public class NGramMap {
      */
     public TimeSeries summedWeightHistory(Collection<String> words,
                                           int startYear, int endYear) {
-        // TODO: Fill in this method.
         TimeSeries summedHistory = new TimeSeries();
         for (String word : words) {
             TimeSeries wordWeightHistory = weightHistory(word, startYear, endYear);
@@ -149,7 +141,6 @@ public class NGramMap {
      * exist in this time frame, ignore it rather than throwing an exception.
      */
     public TimeSeries summedWeightHistory(Collection<String> words) {
-        // TODO: Fill in this method.
         TimeSeries summedHistory = new TimeSeries();
         for (String word : words) {
             TimeSeries wordWeightHistory = weightHistory(word);
@@ -163,7 +154,6 @@ public class NGramMap {
         return summedHistory;
     }
 
-    // TODO: Add any private helper methods.
     private void readWordsFile(String wordsFilename) { //FileReadDemo
         In in = new In(wordsFilename);
         while (in.hasNextLine()) {
