@@ -40,6 +40,7 @@ public class HistoryHandler extends NgordnetQueryHandler {
         XYChart chart = Plotter.generateTimeSeriesChart(labels, lts);
         String encodedImage = Plotter.encodeChartAsString(chart);
 
+        System.out.println(encodedImage);
         return encodedImage;
     }
 }

@@ -23,7 +23,7 @@ public class HistoryTextHandler extends NgordnetQueryHandler {
         StringBuilder response = new StringBuilder();
         for (String word : words) {
             Map<Integer, Double> wph = map.weightHistory(word, startYear, endYear);
-            response.append(word).append(": ").append(wph).append("\n");
+            response.append(word).append(": ").append(wph.toString()).append("\n");
         }
         return response.toString();
     }
