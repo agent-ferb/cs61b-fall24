@@ -20,11 +20,6 @@ public class HistoryHandler extends NgordnetQueryHandler {
 
     @Override
     public String handle(NgordnetQuery q) {
-        System.out.println("Got query that looks like:");
-        System.out.println("Words: " + q.words());
-        System.out.println("Start Year: " + q.startYear());
-        System.out.println("End Year: " + q.endYear());
-
         List<String> words = q.words();
         int startYear = q.startYear();
         int endYear = q.endYear();
