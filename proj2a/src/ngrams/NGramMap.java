@@ -85,8 +85,8 @@ public class NGramMap {
             Double occurrences = wordOccurrences.get(year);
             Double totalWords = totalCounts.get(year);
 
-            if (totalWords != null && totalWords > 0) {
-                double frequency = occurrences != null ? occurrences / totalWords : 0.0;
+            if (occurrences != null && totalWords != null && totalWords > 0) {
+                double frequency = occurrences / totalWords;
                 relativeFrequency.put(year, frequency);
             }
         }
