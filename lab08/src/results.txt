@@ -1,0 +1,32 @@
+TestRandomSpeedTest
+L = 10
+#strings: 50000
+ULLMap: 7.22 sec
+MyHashMap: 0.05 sec
+Java's Built-in HashMap: 0.02 sec
+
+#strings: 100000
+ULLMap: --Stack Overflow -- couldn't add 100000 strings of length 10.
+MyHashMap: 0.06 sec
+Java's Built-in HashMap: 0.04 sec
+
+L = 50; #strings: 100000
+Enter # strings to insert into ULLMap: 100000
+ULLMap: --Stack Overflow -- couldn't add 100000 strings of length 50.
+MyHashMap: 0.10 sec
+Java's Built-in HashMap: 0.08 sec
+
+InsertInOrderSpeedTest
+#strings: 100000
+ULLMap: --Stack Overflow -- couldn't add 100000 strings.
+MyHashMap: 0.06 sec
+Java's Built-in HashMap: 0.05 sec
+
+Observations:
+1. MyHashMap performs comparably to Java’s built-in `HashMap`,
+indicating good scalability and efficiency.
+2. ULLMap does not handle large datasets well, resulting in stack
+overflow errors for large inputs.
+3. HashMaps are ideal when fast access is prioritized over key ordering,
+while TreeMaps (BSTMap) are more suitable when sorted keys are required
+for operations.
