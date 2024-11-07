@@ -31,6 +31,7 @@ public class Main {
     public static void main(String[] args) {
         NgordnetServer hns = new NgordnetServer();
 
+
         hns.startUp();
         hns.register("history", new DummyHistoryHandler());
         hns.register("historytext", new DummyHistoryTextHandler());
