@@ -66,13 +66,14 @@ public class WordNet {
             String line = in.readLine();
             String[] parts = line.split("\t");
             String word = parts[0];
-            int year = Integer.parseInt(parts[1]); // Ed #1199a
+            int year = Integer.parseInt(parts[1]);
             double occurrences = Double.parseDouble(parts[2]);
 
-            TreeMap<Integer, Double> yearFrequency = new TreeMap<>();
-            yearFrequency.put(year, occurrences);
-            wordFrequencies.putIfAbsent(nounToIDs.get(word), yearFrequency); // Map API
-            wordFrequencies.get(nounToIDs.get(word)).put(year, occurrences);
+            int wordID = nounToIDs.getOrDefault(word, -1);
+            if (wordID == -1) continue;
+
+            wordFrequencies.putIfAbsent(wordID, new TreeMap<>()); // Map API
+            wordFrequencies.get(wordID).put(year, occurrences);
         }
     }
 
@@ -96,9 +97,12 @@ public class WordNet {
     }
 
     public Set<String> getCombinedHyponyms(List<String> words) {
-        Set<String> combinedHyponyms = new HashSet<>();
-        for (String word : words) {
-            combinedHyponyms.addAll(getHyponyms(word));
+        if (words.isEmpty()) {
+            return Collections.emptySet();
+        }
+        Set<String> combinedHyponyms = new HashSet<>(getHyponyms(words.getFirst()));
+        for (int i = 1; i < words.size(); i++) {
+            combinedHyponyms.retainAll(getHyponyms(words.get(i)));
         }
         return combinedHyponyms;
     }
@@ -128,11 +132,6 @@ public class WordNet {
 
     private double calculatePopularity(int hyponymID, int startYear, int endYear) {
         double totalPopularity = 0.0;
-        if (!nounToSynsetIDs.containsKey(hyponymID)) {
-            return 0;
-        }
-        wordFrequencies.get(hyponymID);
-
         TreeMap<Integer, Double> yearlyCounts = wordFrequencies.get(hyponymID);
         if (yearlyCounts == null) {
             return 0;
@@ -144,8 +143,7 @@ public class WordNet {
     }
 
     public List<String> retrieveTopKHyponyms(String word, int startYear, int endYear, int k) {
-        Map<String, Integer> hyponymPopularity = new HashMap<>();
-
+        Map<String, Double> hyponymPopularity = new HashMap<>();
         Set<Integer> synsetIDs = nounToSynsetIDs.get(word);
         if (synsetIDs == null) {
             return new ArrayList<>(); // Return empty list if word not found
@@ -154,19 +152,23 @@ public class WordNet {
             Set<Integer> reachableIDs = findReachable(synsetID);
             for (int hyponymID : reachableIDs) {
                 List<String> nouns = synsetMap.get(hyponymID);
+                if (nouns == null) {
+                    continue; // Skip if no nouns are found for this hyponymID
+                }
                 double popularity = calculatePopularity(hyponymID, startYear, endYear);
-
                 for (String noun : nouns) {
-                    hyponymPopularity.put(noun, hyponymPopularity.getOrDefault(noun, 0.0) + popularity);
+                    hyponymPopularity.put(noun, hyponymPopularity.getOrDefault(noun, 0.0 ) + popularity);
                 }
             }
         }
-        List<Map.Entry<String, Integer>> sortedHyponyms = new ArrayList<>(hyponymPopularity.entrySet());
-        sortedHyponyms.sort((a, b) -> b.getValue().compareTo(a.getValue()));
+        PriorityQueue<Map.Entry<String, Double>> maxHeap = new PriorityQueue<>(
+                (a, b) -> Double.compare(b.getValue(), a.getValue())
+        );
+        maxHeap.addAll(hyponymPopularity.entrySet());
 
         List<String> topKHyponyms = new ArrayList<>();
-        for (int i = 0; i < Math.min(k, sortedHyponyms.size()); i++) {
-            topKHyponyms.add(sortedHyponyms.get(i).getKey());
+        for (int i = 0; i < k && !maxHeap.isEmpty(); i++) {
+            topKHyponyms.add(maxHeap.poll().getKey());
         }
 
         return topKHyponyms;

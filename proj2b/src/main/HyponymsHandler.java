@@ -27,23 +27,11 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         if (words.size() == 1) {
             // Single-word case
             String word = words.get(0);
-            combinedHyponyms.add("[");
             combinedHyponyms.addAll(wordNet.getHyponyms(word));
-            combinedHyponyms.add("]");
-            return combinedHyponyms.toString();
+
         } else {
             // Multi-word case
             combinedHyponyms.addAll(wordNet.getCombinedHyponyms(words));
-            Collections.sort(combinedHyponyms);
-            List<String> ultiHyponyms = new ArrayList<>();
-            ultiHyponyms.add("[");
-            for (String w : combinedHyponyms) {
-                ultiHyponyms.add(w);
-                ultiHyponyms.add(", ");
-            }
-            ultiHyponyms.remove(", ");
-            ultiHyponyms.add("]");
-            return ultiHyponyms.toString();
         }
 
         if (k > 0) {
@@ -55,5 +43,8 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             Collections.sort(topKHyponyms);
             return topKHyponyms.toString();
         }
+
+        Collections.sort(combinedHyponyms);
+        return combinedHyponyms.toString();
     }
 }
