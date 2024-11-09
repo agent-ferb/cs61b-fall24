@@ -70,7 +70,9 @@ public class WordNet {
             double occurrences = Double.parseDouble(parts[2]);
 
             int wordID = nounToIDs.getOrDefault(word, -1);
-            if (wordID == -1) continue;
+            if (wordID == -1) {
+                continue;
+            }
 
             wordFrequencies.putIfAbsent(wordID, new TreeMap<>()); // Map API
             wordFrequencies.get(wordID).put(year, occurrences);
