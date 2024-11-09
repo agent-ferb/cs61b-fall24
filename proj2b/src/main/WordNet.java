@@ -8,14 +8,12 @@ import java.util.stream.Collectors;
 public class WordNet {
     private Map<Integer, List<String>> synsetMap;
     private Map<String, Set<Integer>> nounToSynsetIDs;
-    private Map<String, Integer> nounToIDs;
     private Graph hyponymGraph;
-    private TreeMap<Integer, TreeMap<Integer, Double>> wordFrequencies;
+    private TreeMap<String, TreeMap<Integer, Double>> wordFrequencies;
 
     public WordNet(String synsetFilename, String hyponymFilename, String frequencyFilename) {
         synsetMap = new HashMap<>();
         nounToSynsetIDs = new HashMap<>();
-        nounToIDs = new HashMap<>();
         hyponymGraph = new Graph();
         wordFrequencies = new TreeMap<>();
 
@@ -35,7 +33,6 @@ public class WordNet {
             for (String noun : nouns) {
                 nounToSynsetIDs.putIfAbsent(noun, new HashSet<>());
                 nounToSynsetIDs.get(noun).add(synsetID);
-                nounToIDs.putIfAbsent(noun, synsetID);
             }
 
             synsetMap.put(synsetID, nouns);
@@ -70,13 +67,12 @@ public class WordNet {
             int year = Integer.parseInt(parts[1]);
             double occurrences = Double.parseDouble(parts[2]);
 
-            int wordID = nounToIDs.getOrDefault(word, -1);
-            if (wordID == -1) {
+            if (word == null) {
                 continue;
             }
 
-            wordFrequencies.putIfAbsent(wordID, new TreeMap<>()); // Map API
-            wordFrequencies.get(wordID).put(year, occurrences);
+            wordFrequencies.putIfAbsent(word, new TreeMap<>()); // Map API
+            wordFrequencies.get(word).put(year, occurrences);
         }
     }
 
@@ -133,9 +129,9 @@ public class WordNet {
         return visited;
     }
 
-    private double calculatePopularity(int hyponymID, int startYear, int endYear) {
+    private double calculatePopularity(String word, int startYear, int endYear) {
         double totalPopularity = 0.0;
-        TreeMap<Integer, Double> yearlyCounts = wordFrequencies.get(hyponymID);
+        TreeMap<Integer, Double> yearlyCounts = wordFrequencies.get(word);
         if (yearlyCounts == null) {
             return 0;
         }
@@ -154,9 +150,8 @@ public class WordNet {
 
         // Populate popularityMap with the popularity scores
         for (String hyponym : word) {
-            int hyponymID = nounToIDs.getOrDefault(hyponym, -1);
-            if (hyponymID != -1) {  // Ensure the hyponym has a valid ID
-                double popularity = calculatePopularity(hyponymID, startYear, endYear);
+            if (hyponym != null) {  // Ensure the hyponym has a valid ID
+                double popularity = calculatePopularity(hyponym, startYear, endYear);
                 popularityMap.put(hyponym, popularity);
             }
         }
