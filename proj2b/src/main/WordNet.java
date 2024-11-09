@@ -102,7 +102,7 @@ public class WordNet {
         if (words.isEmpty()) {
             return Collections.emptySet();
         }
-        Set<String> combinedHyponyms = new HashSet<>(getHyponyms(words.getFirst()));
+        Set<String> combinedHyponyms = new HashSet<>(getHyponyms(words.get(0)));
         for (int i = 1; i < words.size(); i++) {
             combinedHyponyms.retainAll(getHyponyms(words.get(i)));
         }
