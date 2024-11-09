@@ -32,8 +32,9 @@ public class Main {
     public static void main(String[] args) {
         NgordnetServer hns = new NgordnetServer();
 
-        NGramMap ngm = new NGramMap(WORDS_FILE, TOTAL_COUNTS_FILE);
         WordNet wn = new WordNet(SMALL_SYNSET_FILE, SMALL_HYPONYM_FILE, WORDS_FILE);
+        NGramMap ngm = new NGramMap(WORDS_FILE, TOTAL_COUNTS_FILE);
+
         hns.startUp();
         hns.register("history", new DummyHistoryHandler());
         hns.register("historytext", new DummyHistoryTextHandler());
