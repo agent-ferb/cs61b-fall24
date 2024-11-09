@@ -3,6 +3,7 @@ package main;
 import edu.princeton.cs.algs4.In;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class WordNet {
     private Map<Integer, List<String>> synsetMap;
@@ -145,25 +146,26 @@ public class WordNet {
     }
 
     public List<String> retrieveTopKHyponyms(List<String> word, int startYear, int endYear, int k) {
-        // Define a priority queue with a custom comparator for popularity
-        PriorityQueue<String> topKHyponyms = new PriorityQueue<>(k, Comparator.comparingDouble(
-                hyponym -> {
-                    int hyponymID = nounToIDs.getOrDefault(hyponym, -1);
-                    return (calculatePopularity(hyponymID, startYear, endYear));
-                }
-        ));
-        // Iterate over each hyponym and keep the top k
+        // Create a list to store hyponyms with their popularity scores
+        List<String> result = new ArrayList<>();
+
+        // Map to store each hyponym and its popularity score
+        Map<String, Double> popularityMap = new HashMap<>();
+
+        // Populate popularityMap with the popularity scores
         for (String hyponym : word) {
             int hyponymID = nounToIDs.getOrDefault(hyponym, -1);
             if (hyponymID != -1) {  // Ensure the hyponym has a valid ID
-                topKHyponyms.offer(hyponym);
-                if (topKHyponyms.size() > k) {
-                    topKHyponyms.poll();
-                }
+                double popularity = calculatePopularity(hyponymID, startYear, endYear);
+                popularityMap.put(hyponym, popularity);
             }
         }
-        List<String> result = new ArrayList<>(topKHyponyms);
-        Collections.sort(result);
-        return result;
+
+        // Sort hyponyms by popularity in descending order
+        return popularityMap.entrySet().stream()
+                .sorted((e1, e2) -> Double.compare(e2.getValue(), e1.getValue())) // Sort by descending popularity
+                .limit(k) // Take top k elements
+                .map(Map.Entry::getKey) // Get only hyponym names
+                .collect(Collectors.toList());
     }
 }
