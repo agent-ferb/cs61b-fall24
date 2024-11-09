@@ -142,35 +142,26 @@ public class WordNet {
         return totalPopularity;
     }
 
-    public List<String> retrieveTopKHyponyms(String word, int startYear, int endYear, int k) {
-        Map<String, Double> hyponymPopularity = new HashMap<>();
-        Set<Integer> synsetIDs = nounToSynsetIDs.get(word);
-        if (synsetIDs == null) {
-            return new ArrayList<>(); // Return empty list if word not found
-        }
-        for (int synsetID : synsetIDs) {
-            Set<Integer> reachableIDs = findReachable(synsetID);
-            for (int hyponymID : reachableIDs) {
-                List<String> nouns = synsetMap.get(hyponymID);
-                if (nouns == null) {
-                    continue; // Skip if no nouns are found for this hyponymID
+    public List<String> retrieveTopKHyponyms(List<String> word, int startYear, int endYear, int k) {
+        // Define a priority queue with a custom comparator for popularity
+        PriorityQueue<String> topKHyponyms = new PriorityQueue<>(k, Comparator.comparingDouble(
+                hyponym -> {
+                    int hyponymID = nounToIDs.getOrDefault(hyponym, -1);
+                    return (calculatePopularity(hyponymID, startYear, endYear));
                 }
-                double popularity = calculatePopularity(hyponymID, startYear, endYear);
-                for (String noun : nouns) {
-                    hyponymPopularity.put(noun, hyponymPopularity.getOrDefault(noun, 0.0 ) + popularity);
+        ));
+        // Iterate over each hyponym and keep the top k
+        for (String hyponym : word) {
+            int hyponymID = nounToIDs.getOrDefault(hyponym, -1);
+            if (hyponymID != -1) {  // Ensure the hyponym has a valid ID
+                topKHyponyms.offer(hyponym);
+                if (topKHyponyms.size() > k) {
+                    topKHyponyms.poll();
                 }
             }
         }
-        PriorityQueue<Map.Entry<String, Double>> maxHeap = new PriorityQueue<>(
-                (a, b) -> Double.compare(b.getValue(), a.getValue())
-        );
-        maxHeap.addAll(hyponymPopularity.entrySet());
-
-        List<String> topKHyponyms = new ArrayList<>();
-        for (int i = 0; i < k && !maxHeap.isEmpty(); i++) {
-            topKHyponyms.add(maxHeap.poll().getKey());
-        }
-
-        return topKHyponyms;
+        List<String> result = new ArrayList<>(topKHyponyms);
+        Collections.sort(result);
+        return result;
     }
 }

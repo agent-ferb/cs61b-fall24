@@ -36,14 +36,10 @@ public class HyponymsHandler extends NgordnetQueryHandler {
 
         if (k > 0) {
             List<String> topKHyponyms = new ArrayList<>();
-            for (String word : combinedHyponyms) {
-                List<String> topHyponyms = wordNet.retrieveTopKHyponyms(word, startYear, endYear, k);
-                topKHyponyms.addAll(topHyponyms);
-            }
+            topKHyponyms.addAll(wordNet.retrieveTopKHyponyms(combinedHyponyms, startYear, endYear, k));
             Collections.sort(topKHyponyms);
             return topKHyponyms.toString();
         }
-
         Collections.sort(combinedHyponyms);
         return combinedHyponyms.toString();
     }
