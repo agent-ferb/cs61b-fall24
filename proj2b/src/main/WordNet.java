@@ -158,6 +158,7 @@ public class WordNet {
 
         // Sort hyponyms by popularity in descending order
         return popularityMap.entrySet().stream()
+                .filter(e -> e.getValue() > 0) // Exclude hyponyms with zero popularity
                 .sorted((e1, e2) -> Double.compare(e2.getValue(), e1.getValue())) // Sort by descending popularity
                 .limit(k) // Take top k elements
                 .map(Map.Entry::getKey) // Get only hyponym names
