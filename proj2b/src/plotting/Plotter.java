@@ -14,6 +14,9 @@ import java.util.Base64;
 import java.util.List;
 import java.util.TreeMap;
 
+import java.util.TreeMap;
+import java.util.ArrayList;
+
 public class Plotter {
 
     public static XYChart generateTimeSeriesChart(List<String> words, List<TimeSeries> lts) {
