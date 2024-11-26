@@ -5,13 +5,14 @@ import edu.princeton.cs.algs4.StdDraw;
 import java.awt.Color;
 import java.awt.Font;
 
+
 /**
  * Utility class for rendering tiles. You do not need to modify this file. You're welcome
  * to, but be careful. We strongly recommend getting everything else working before
  * messing with this renderer, unless you're trying to do something fancy like
  * allowing scrolling of the screen or tracking the avatar or something similar.
  */
-public class TERenderer {
+public class TERenderer { //@source chatgpt suggested me to alter this class a little bit.
     private static final int TILE_SIZE = 16;
     private int width;
     private int height;
@@ -82,9 +83,9 @@ public class TERenderer {
      * the screen in tiles.
      * @param world the 2D TETile[][] array to render
      */
-    public void renderFrame(TETile[][] world) {
+    public void renderFrame(TETile[][] world, int avatarX, int avatarY, boolean isLineOfSightEnabled, int lineOfSightRadius) {
         StdDraw.clear(new Color(0, 0, 0));
-        drawTiles(world);
+        drawTiles(world, avatarX, avatarY, isLineOfSightEnabled, lineOfSightRadius);
         StdDraw.show();
     }
 
@@ -92,16 +93,32 @@ public class TERenderer {
      * Draws all world tiles without clearing the canvas or showing the tiles.
      * @param world the 2D TETile[][] array to render
      */
-    public void drawTiles(TETile[][] world) {
+    public void drawTiles(TETile[][] world, int avatarX, int avatarY, boolean isLineOfSightEnabled, int lineOfSightRadius) {
         int numXTiles = world.length;
         int numYTiles = world[0].length;
+
         for (int x = 0; x < numXTiles; x += 1) {
             for (int y = 0; y < numYTiles; y += 1) {
                 if (world[x][y] == null) {
                     throw new IllegalArgumentException("Tile at position x=" + x + ", y=" + y
                             + " is null.");
                 }
-                world[x][y].draw(x + xOffset, y + yOffset);
+                // Line-of-sight rendering logic
+                if (isLineOfSightEnabled) {
+                    // Calculate distance from the avatar to the current tile
+                    int dx = x - avatarX;
+                    int dy = y - avatarY;
+                    double distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance <= lineOfSightRadius) {
+                        world[x][y].draw(x + xOffset, y + yOffset); // Render the tile
+                    } else {
+                        Tileset.NOTHING.draw(x + xOffset, y + yOffset); // Render as "hidden"
+                    }
+                } else {
+                    // Render all tiles when LoS is disabled
+                    world[x][y].draw(x + xOffset, y + yOffset);
+                }
             }
         }
     }
